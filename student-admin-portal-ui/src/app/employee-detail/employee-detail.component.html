@@ -1,0 +1,77 @@
+<div class="page-header">
+  <div class="container">
+    <h1>View Premium Amount</h1>
+
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+ <!--empdetail-->
+ <form #employeeDetailForm="ngForm">
+<div class="row">
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input type="text" matInput [(ngModel)]="employee.firstname" name="firstname">
+    </mat-form-field>
+  </div>
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input type="text" matInput [(ngModel)]="employee.lastname" name="lastname">
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Date Of Birth</mat-label>
+      <input  matInput [matDatepicker]="picker" [(ngModel)]="employee.dateOfBirth" name="dateOfBirth" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Age</mat-label>
+      <input type="number" matInput  [(ngModel)]="employee.age" name="age">
+    </mat-form-field>
+  </div>
+</div>
+<div  class="row">
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Occupation</mat-label>
+      <mat-select [(ngModel)]="employee.occupation" name="occupation">
+        <mat-option *ngFor="let occupat of occupation " [value]="occupat.Rating">
+       {{occupat.Occupationame}}
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Death – Sum Insured</mat-label>
+      <input type="number" matInput  [(ngModel)]="employee.deathSumInsured" name="deathSumInsured">
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <button mat-raised-button color="primary" (click)="onQuery()">Query</button>
+
+  </div>
+
+</div>
+ </form>
+
+    </div>
+    <div class="col-xs-6">
+      <!--profileImage-->
+    </div>
+  </div>
+
+</div>
+
