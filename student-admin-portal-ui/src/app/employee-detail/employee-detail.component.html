@@ -13,13 +13,17 @@
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>First Name</mat-label>
-      <input type="text" matInput [(ngModel)]="employee.firstname" name="firstname">
+      <input type="text"   id="firstname" matInput [(ngModel)]="employee.firstname" name="firstname"  required  minlength="4">
+      <mat-error> First Name must be at least 4 characters long</mat-error>
     </mat-form-field>
+
   </div>
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>Last Name</mat-label>
-      <input type="text" matInput [(ngModel)]="employee.lastname" name="lastname">
+      <input type="text" matInput [(ngModel)]="employee.lastname" name="lastname" required>
+      <mat-error>Please Enter Last Name </mat-error>
+
     </mat-form-field>
   </div>
 </div>
@@ -27,15 +31,17 @@
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>Date Of Birth</mat-label>
-      <input  matInput [matDatepicker]="picker" [(ngModel)]="employee.dateOfBirth" name="dateOfBirth" >
+      <input  matInput [matDatepicker]="picker" [(ngModel)]="employee.dateOfBirth" name="dateOfBirth" required >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+      <mat-error>Please Enter Date Of Birth </mat-error>
     </mat-form-field>
   </div>
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>Age</mat-label>
-      <input type="number" matInput  [(ngModel)]="employee.age" name="age">
+      <input type="number" matInput  [(ngModel)]="employee.age" name="age" step="1" min="1" max="120" required>
+      <mat-error>Please enter Age not greater than 120</mat-error>
     </mat-form-field>
   </div>
 </div>
@@ -43,24 +49,27 @@
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>Occupation</mat-label>
-      <mat-select [(ngModel)]="employee.occupation" name="occupation">
-        <mat-option *ngFor="let occupat of occupation " [value]="occupat.Rating">
-       {{occupat.Occupationame}}
+      <mat-select [(ngModel)]="employee.occupation" name="occupation" required >
+
+        <mat-option *ngFor="let occupat of occupation " [value]="occupat.rating" (onSelectionChange)="onQuery()" >
+       {{occupat.occupationame}}
         </mat-option>
 
       </mat-select>
+      <mat-error>Please Select Occupation </mat-error>
     </mat-form-field>
   </div>
   <div class="col-xs-6">
     <mat-form-field appearance="outline">
       <mat-label>Death – Sum Insured</mat-label>
-      <input type="number" matInput  [(ngModel)]="employee.deathSumInsured" name="deathSumInsured">
+      <input type="number" matInput  [(ngModel)]="employee.deathSumInsured" name="deathSumInsured" step="1" min="1"  required   >
+      <mat-error>Please Enter Death – Sum Insured Value </mat-error>
     </mat-form-field>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <button mat-raised-button color="primary" (click)="onQuery()">Query</button>
+    <button mat-raised-button color="primary" (click)="onQuery()">Premium Amount</button>
 
   </div>
 
@@ -68,8 +77,8 @@
  </form>
 
     </div>
-    <div class="col-xs-6">
-      <!--profileImage-->
+    <div class="col-xs-6" *ngIf="showpremiumdiv">
+   <h4>   {{'Hi ,' +(premiumcal.firstname|uppercase)+' ' +(premiumcal.lastname|uppercase)+' '+'Your Total Premium  Amount is ='+'  ' +(premiumcal.premiumAmount| number)}}</h4>
     </div>
   </div>
 

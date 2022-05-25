@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Weather } from '../models/ui-models/weather.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { PremiumamountService } from './premiumamount.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Employee } from '../models/ui-models/employee.model';
 import { Occupation } from '../models/ui-models/occupation.model';
+import { PremiumCalculation } from '../models/ui-models/PremiumCalculation.model';
 @Component({
   selector: 'app-employee-detail',
   templateUrl: './employee-detail.component.html',
@@ -11,48 +12,32 @@ import { Occupation } from '../models/ui-models/occupation.model';
 
 })
 export class EmployeeDetailComponent implements OnInit {
-weather:Weather[]=[];
-occupation:Occupation[]=[
-  {Occupationame:"doctor",
-Rating:"yy"},
-{Occupationame:"urse",
-Rating:"lly"},
-];
+
+occupation:Occupation[]=[];
+
 employee:Employee={
   firstname:'',
   lastname:'',
   age:0,
   occupation:'',
   dateOfBirth:'',
-  deathSumInsured:0,
-
-
+  deathSumInsured:0
 }
-  constructor(private premium :PremiumamountService) { }
+premiumcal:PremiumCalculation={
+  firstname:'',
+  lastname:'',
+  premiumAmount:0
+};
+showpremiumdiv=false;
+@ViewChild('employeeDetailForm') employeeDetailForm ?:NgForm;
+  constructor(private premiumservice :PremiumamountService) { }
 
   ngOnInit(): void {
-
-   /*  this.premium.getDeathPremium()
-    .subscribe(
-(successResponse)=>{
-  this.weather=successResponse;
-  console.log(this.weather);
-
-},
-(errorResponse)=>{
-  console.log(errorResponse);
-
-}
-
-    ); */
-  }
-  onQuery():void{
-console.log(this.employee);
-this.premium.getDeathPremium(this.employee)
+    this.premiumservice.getOccupation()
 .subscribe(
   (successResponse)=>{
-    this,this.employee=successResponse;
-
+    console.log(successResponse);
+      this.occupation=successResponse;
 
   },
   (errorResponse)=>{
@@ -60,6 +45,28 @@ this.premium.getDeathPremium(this.employee)
 
   }
 );
+  }
+
+
+  onQuery():void{
+
+   if(this.employeeDetailForm?.form.valid){
+    this.premiumservice.getDeathPremium(this.employee)
+    .subscribe(
+      (successResponse)=>{
+          this.premiumcal=successResponse;
+        this.showpremiumdiv=true;
+
+
+      },
+      (errorResponse)=>{
+        console.log(errorResponse);
+
+      }
+    );
+
+   }
+
   }
 
 }

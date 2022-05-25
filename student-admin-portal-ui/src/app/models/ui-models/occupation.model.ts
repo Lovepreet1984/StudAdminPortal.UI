@@ -1,4 +1,4 @@
 export interface Occupation{
-  Occupationame:string,
-Rating:string
+occupationame:string,
+rating:string
 }
